@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجر القرآن الكريم | لمسات إيمانية</title>
+    <title>Qura’an Store | لمسات إيمانية</title>
     <style>
         :root {
             --gold: #d4af37;
@@ -19,7 +19,7 @@
         header {
             background-color: var(--dark-green);
             color: var(--gold);
-            padding: 1rem;
+            padding: 1.5rem;
             text-align: center;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
@@ -36,13 +36,11 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             border: 1px solid #eee;
         }
-        .product-image {
-            max-width: 100%;
-            height: auto;
-            border-radius: 10px;
-            background-color: #eee; /* مكان الصورة */
+        h1 { 
+            color: var(--gold); 
+            margin: 0;
+            font-size: 2.5rem;
         }
-        h1 { color: var(--gold); }
         .price {
             font-size: 1.5rem;
             color: var(--dark-green);
@@ -65,7 +63,7 @@
         }
         footer {
             margin-top: 3rem;
-            padding: 1rem;
+            padding: 1.5rem;
             background: #eee;
             font-size: 0.9rem;
         }
@@ -74,13 +72,13 @@
 <body>
 
 <header>
-    <h1>نور القرآن</h1>
+    <h1>Qura’an Store</h1>
     <p>منتجات متميزة تليق بكتاب الله</p>
 </header>
 
 <div class="container">
     <div class="product-card">
-        <div style="width:100%; height:300px; background:#f0f0f0; display:flex; align-items:center; justify-content:center; border-radius:10px;">
+        <div style="width:100%; height:300px; background:#f0f0f0; display:flex; align-items:center; justify-content:center; border-radius:10px; border: 2px dashed #ccc;">
             <p>ضعي صورة المنتج هنا (Logo/Product Mockup)</p>
         </div>
         
@@ -94,17 +92,17 @@
 </div>
 
 <footer>
-    &copy; 2026 جميع الحقوق محفوظة - متجر نور القرآن
+    &copy; 2026 جميع الحقوق محفوظة - Qura’an Store
 </footer>
 
 <script>
     function buyNow() {
-        const message = "السلام عليكم، أريد طلب منتج (مصحف التجويد المفسر)";
-        const phone = "201000000000"; // حطي رقمك هنا
+        // تقدري تعدلي الرسالة اللي هتوصلك هنا برضه
+        const message = "السلام عليكم، أريد طلب منتج من متجر Qura’an Store";
+        const phone = "201000000000"; // تذكري تغيير الرقم لرقمك الحقيقي
         window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
     }
 </script>
 
 </body>
-
 </html>
