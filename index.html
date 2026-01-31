@@ -16,23 +16,45 @@
             background-color: #f9f9f9;
             color: #333;
         }
-        /* تعديل القسم العلوي */
+        
+        /* تعديل القسم العلوي مع تضبيط الصورة */
         header {
-            /* تم إزالة اللون الأخضر وتم استبداله بالصورة */
-            background-image: url('image_2.png'); /* تأكدي إن اسم الصورة مطابق لاسم ملفك */
-            background-size: cover;   /* لتغطية الصورة لكامل المساحة */
-            background-position: center; /* لوضع الصورة في المنتصف */
-            color: var(--gold);
-            padding: 3rem 1.5rem; /* تم زيادة الحشو قليلاً لإبراز الصورة */
+            position: relative; /* عشان نقدر نحط الطبقة الشفافة */
+            background-image: url('header.jpg'); /* اسم الصورة الجديد */
+            background-size: cover;
+            background-position: center;
+            color: var(--white); /* غيرنا اللون لأبيض عشان يظهر أحسن */
+            padding: 4rem 1.5rem; /* كبرنا المساحة عشان الصورة تبان أكتر */
             text-align: center;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* ظل خفيف للنص عشان يظهر أوضح فوق الصورة */
+            overflow: hidden;
         }
+
+        /* طبقة سوداء خفيفة فوق الصورة عشان الكلام يوضح */
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4); /* تعتيم بنسبة 40% */
+            z-index: 1;
+        }
+
+        /* عشان الكلام يظهر فوق طبقة التعتيم */
+        header h1, header p {
+            position: relative;
+            z-index: 2;
+        }
+
         .container {
             max-width: 1000px;
-            margin: 2rem auto;
+            margin: -2rem auto 2rem; /* حركة جمالية: طلعنا الكارت لفوق شوية عشان يتداخل مع الهيدر */
             padding: 0 1rem;
             text-align: center;
+            position: relative;
+            z-index: 3;
         }
         .product-card {
             background: white;
@@ -44,7 +66,13 @@
         h1 { 
             color: var(--gold); 
             margin: 0;
-            font-size: 2.5rem;
+            font-size: 3rem; /* كبرنا الخط شوية */
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        header p {
+            font-size: 1.1rem;
+            margin-top: 10px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
         .price {
             font-size: 1.5rem;
@@ -71,6 +99,7 @@
             padding: 1.5rem;
             background: #eee;
             font-size: 0.9rem;
+            text-align: center;
         }
     </style>
 </head>
@@ -83,11 +112,30 @@
 
 <div class="container">
     <div class="product-card">
-        <div style="width:100%; height:300px; background:#f0f0f0; display:flex; align-items:center; justify-content:center; border-radius:10px; border: 2px dashed #ccc;">
-            <p>ضعي صورة المنتج هنا (Logo/Product Mockup)</p>
+        <div style="width:100%; height:300px; background:#f0f0f0; display:flex; align-items:center; justify-content:center; border-radius:10px; border: 2px dashed #ccc; margin-bottom: 1.5rem;">
+            <p style="color:#777">صورة المنتج (مصحف)</p>
         </div>
         
         <h2>مصحف التجويد المفسر - طبعة فاخرة</h2>
         <p>تصميم أنيق يساعدك على التدبر والحفظ بأسلوب عصري ومنظم.</p>
         
-        <div class="price
+        <div class="price">150 جنيه مصري</div>
+        
+        <button class="btn-buy" onclick="buyNow()">اطلب الآن عبر واتساب</button>
+    </div>
+</div>
+
+<footer>
+    &copy; 2026 جميع الحقوق محفوظة - Qura’an Store
+</footer>
+
+<script>
+    function buyNow() {
+        const message = "السلام عليكم، أريد طلب منتج من متجر Qura’an Store";
+        const phone = "201000000000"; 
+        window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
+    }
+</script>
+
+</body>
+</html>
