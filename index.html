@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Qura’an Store | لمسات إيمانية</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;700&display=swap" rel="stylesheet">
+
     <style>
         :root {
             --gold: #d4af37;
@@ -11,26 +16,25 @@
             --white: #ffffff;
         }
         body {
+            /* الخط الأساسي للموقع (نص عادي) */
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             background-color: #f9f9f9;
             color: #333;
         }
         
-        /* تعديل القسم العلوي مع تضبيط الصورة */
         header {
-            position: relative; /* عشان نقدر نحط الطبقة الشفافة */
-            background-image: url('header.jpg'); /* اسم الصورة الجديد */
+            position: relative;
+            background-image: url('header.jpg'); 
             background-size: cover;
             background-position: center;
-            color: var(--white); /* غيرنا اللون لأبيض عشان يظهر أحسن */
-            padding: 4rem 1.5rem; /* كبرنا المساحة عشان الصورة تبان أكتر */
+            color: var(--white);
+            padding: 4rem 1.5rem;
             text-align: center;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             overflow: hidden;
         }
 
-        /* طبقة سوداء خفيفة فوق الصورة عشان الكلام يوضح */
         header::before {
             content: '';
             position: absolute;
@@ -38,11 +42,10 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.4); /* تعتيم بنسبة 40% */
+            background: rgba(0, 0, 0, 0.4);
             z-index: 1;
         }
 
-        /* عشان الكلام يظهر فوق طبقة التعتيم */
         header h1, header p {
             position: relative;
             z-index: 2;
@@ -50,7 +53,7 @@
 
         .container {
             max-width: 1000px;
-            margin: -2rem auto 2rem; /* حركة جمالية: طلعنا الكارت لفوق شوية عشان يتداخل مع الهيدر */
+            margin: -2rem auto 2rem;
             padding: 0 1rem;
             text-align: center;
             position: relative;
@@ -63,12 +66,17 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             border: 1px solid #eee;
         }
+
+        /* 2. هنا طبقنا الخط الجديد على اسم البراند فقط */
         h1 { 
+            font-family: 'Reem Kufi', sans-serif; /* تطبيق الخط الناعم */
             color: var(--gold); 
             margin: 0;
-            font-size: 3rem; /* كبرنا الخط شوية */
+            font-size: 3.5rem; /* كبرناه شوية عشان يبان جمال الخط */
+            letter-spacing: 1px; /* مسافة بسيطة بين الحروف */
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
+
         header p {
             font-size: 1.1rem;
             margin-top: 10px;
@@ -89,6 +97,7 @@
             font-size: 1.2rem;
             cursor: pointer;
             transition: 0.3s;
+            font-family: 'Reem Kufi', sans-serif; /* خليت الزرار كمان بنفس الخط عشان الشياكة */
         }
         .btn-buy:hover {
             background-color: #b8962d;
@@ -113,7 +122,7 @@
 <div class="container">
     <div class="product-card">
         <div style="width:100%; height:300px; background:#f0f0f0; display:flex; align-items:center; justify-content:center; border-radius:10px; border: 2px dashed #ccc; margin-bottom: 1.5rem;">
-            <p style="color:#777">صورة المنتج (مصحف)</p>
+            <p style="color:#777">صورة المنتج</p>
         </div>
         
         <h2>مصحف التجويد المفسر - طبعة فاخرة</h2>
