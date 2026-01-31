@@ -16,12 +16,17 @@
             background-color: #f9f9f9;
             color: #333;
         }
+        /* تعديل القسم العلوي */
         header {
-            background-color: var(--dark-green);
+            /* تم إزالة اللون الأخضر وتم استبداله بالصورة */
+            background-image: url('image_2.png'); /* تأكدي إن اسم الصورة مطابق لاسم ملفك */
+            background-size: cover;   /* لتغطية الصورة لكامل المساحة */
+            background-position: center; /* لوضع الصورة في المنتصف */
             color: var(--gold);
-            padding: 1.5rem;
+            padding: 3rem 1.5rem; /* تم زيادة الحشو قليلاً لإبراز الصورة */
             text-align: center;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* ظل خفيف للنص عشان يظهر أوضح فوق الصورة */
         }
         .container {
             max-width: 1000px;
@@ -85,25 +90,4 @@
         <h2>مصحف التجويد المفسر - طبعة فاخرة</h2>
         <p>تصميم أنيق يساعدك على التدبر والحفظ بأسلوب عصري ومنظم.</p>
         
-        <div class="price">150 جنيه مصري</div>
-        
-        <button class="btn-buy" onclick="buyNow()">اطلب الآن عبر واتساب</button>
-    </div>
-</div>
-
-<footer>
-    &copy; 2026 جميع الحقوق محفوظة - Qura’an Store
-</footer>
-
-<script>
-    function buyNow() {
-        // تقدري تعدلي الرسالة اللي هتوصلك هنا برضه
-        const message = "السلام عليكم، أريد طلب منتج من متجر Qura’an Store";
-        const phone = "201000000000"; // تذكري تغيير الرقم لرقمك الحقيقي
-        window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
-    }
-</script>
-
-</body>
-</html>
-
+        <div class="price
