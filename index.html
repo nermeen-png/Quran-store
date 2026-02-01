@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Qura’an Store | لمسات إيمانية</title>
+    <title>Qura’an Store</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,6 +21,20 @@
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* أنيميشن الاهتزاز للسلة */
+        @keyframes shake {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(15deg); }
+            50% { transform: rotate(0deg); }
+            75% { transform: rotate(-15deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        /* كلاس هنضيفه بالجافاسكريبت لما نضيف منتج */
+        .shake-animation {
+            animation: shake 0.5s ease-in-out;
         }
 
         body {
@@ -188,7 +202,7 @@
             width: 60px;
             height: 60px;
             border-radius: 50%;
-            display: none; 
+            display: none; /* هتبقى flex لو السلة فيها منتجات */
             align-items: center;
             justify-content: center;
             font-size: 1.5rem;
@@ -378,14 +392,44 @@
     let cart = [];
     const myPhone = "201018483009"; 
 
+    // --- عند تحميل الصفحة: استرجاع السلة من الذاكرة ---
+    window.onload = function() {
+        // ندور لو فيه حاجة متخزنة
+        const savedCart = localStorage.getItem('quranStoreCart');
+        if (savedCart) {
+            cart = JSON.parse(savedCart); // نرجعها لأصلها كمصفوفة
+            updateCartUI();
+            // لو السلة فيها منتجات، نظهر الأيقونة فوراً
+            if(cart.length > 0) {
+                document.getElementById('cartIcon').style.display = 'flex';
+            }
+        }
+    };
+
+    // دالة لحفظ السلة في الذاكرة (بتشتغل بعد كل إضافة أو حذف)
+    function saveCartToStorage() {
+        localStorage.setItem('quranStoreCart', JSON.stringify(cart));
+    }
+
     function addToCart(name, price) {
         cart.push({ name: name, price: price });
+        saveCartToStorage(); // حفظ
         updateCartUI(); 
-        document.getElementById('cartIcon').style.display = 'flex';
+        
+        const cartIcon = document.getElementById('cartIcon');
+        cartIcon.style.display = 'flex';
+        
+        // تشغيل أنيميشن الاهتزاز
+        cartIcon.classList.add('shake-animation');
+        // إزالة الكلاس بعد نص ثانية عشان ينفع يتهز تاني
+        setTimeout(() => {
+            cartIcon.classList.remove('shake-animation');
+        }, 500);
     }
 
     function removeFromCart(index) {
         cart.splice(index, 1);
+        saveCartToStorage(); // حفظ التعديل
         updateCartUI();
         
         if (cart.length === 0) {
@@ -426,25 +470,19 @@
         document.getElementById('cartModal').style.display = 'none';
     }
 
-    // زرار الشراء الفوري (بدون سعر)
     function directBuy(productName) {
         const message = `السلام عليكم، أريد طلب منتج: (${productName})`;
         window.open(`https://wa.me/${myPhone}?text=${encodeURIComponent(message)}`, '_blank');
     }
 
-    // زرار السلة (تم التعديل: إزالة الأسعار الفردية والإجمالي من الرسالة)
     function checkoutWhatsApp() {
         if (cart.length === 0) return;
         
         let message = "السلام عليكم، أريد طلب المنتجات التالية:\n";
         
-        // التعديل هنا: حذف السعر (item.price) من الرسالة
         cart.forEach(item => {
             message += `- ${item.name}\n`;
         });
-        
-        // لو حابة كمان نشيل الإجمالي من الرسالة عشان تكون زي "شراء الآن" بالظبط، يبقى كدة تمام.
-        // لو عايزة الإجمالي يفضل موجود كمرجع ليكي، سيبي السطر اللي جاي. أنا شيلته بناءً على طلب "زي رسالة شراء الآن".
         
         window.open(`https://wa.me/${myPhone}?text=${encodeURIComponent(message)}`, '_blank');
     }
