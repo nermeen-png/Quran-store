@@ -11,19 +11,19 @@
 
     <style>
         :root {
-            /* باليتة الألوان الملكية */
-            --purple-center: #6a1b9a; /* بنفسجي متوسط في المنتصف */
-            --purple-dark: #120024;   /* كحلي غامق جداً للأطراف */
-            --gold-light: #FBF5B7;    /* ذهبي فاتح (لمعة) */
-            --gold-main: #BF953F;     /* ذهبي أساسي */
-            --gold-dark: #8a6e2f;     /* ذهبي غامق (ضل) */
+            /* باليتة الألوان المبهجة الإسلامية */
+            --bg-cream: #fdfbf7;      /* كريمي فاتح للخلفية */
+            --islamic-teal: #0e4d46;  /* تركواز غامق للعناوين */
+            --gold: #d4af37;          /* ذهبي */
             --white: #ffffff;
+            --pattern-color: rgba(14, 77, 70, 0.03); /* لون النقشة خفيف جداً */
         }
         
-        /* حركة النقوش البطيئة والانسيابية */
-        @keyframes patternMove {
+        /* حركة النقشة المتغيرة (بين السرعة والبطء) */
+        @keyframes patternFloat {
             0% { background-position: 0 0; }
-            100% { background-position: 100px 100px; } /* تتحرك ببطء ونعومة */
+            50% { background-position: 40px 40px; } /* يسرع هنا */
+            100% { background-position: 0 0; }      /* يرجع يهدى تاني */
         }
 
         @keyframes fadeInUp {
@@ -31,53 +31,195 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 1. الخلفية الأساسية (ثابتة ومتدرجة) */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            color: var(--white);
+            background-color: var(--bg-cream);
+            color: #333;
             overflow-x: hidden;
             
-            /* تدرج دائري: يبدأ بنفسجي من المنتصف ويغمق للأطراف */
-            background: radial-gradient(circle at 50% 30%, var(--purple-center), var(--purple-dark) 80%);
-            background-attachment: fixed; /* الخلفية ثابتة، المحتوى هو اللي بيتحرك */
-            background-size: cover;
-            min-height: 100vh;
-        }
-
-        /* 2. طبقة النقوش الذهبية المتحركة */
-        .pattern-overlay {
-            position: fixed; /* ثابتة بملء الشاشة */
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none; /* عشان نقدر ندوس على اللي تحتها */
-            z-index: -1; /* خلف المحتوى */
-            opacity: 0.1; /* شفافية خفيفة جداً لتعطي مظهر راقي */
-            
-            /* رسم نقشة هندسية إسلامية بالكود (بديل للصور) */
-            /* يمكنك استبدال هذا السطر بـ url('pattern.png') لو عندك صورة نقشة شفافة */
+            /* ----- النقشة الإسلامية (Geometric Pattern) ----- */
+            /* رسم مربعات متداخلة (شكل هندسي إسلامي) بالكود */
             background-image: 
-                radial-gradient(circle, var(--gold-main) 2px, transparent 2.5px),
-                radial-gradient(circle, var(--gold-main) 2px, transparent 2.5px);
-            background-size: 50px 50px;
-            background-position: 0 0, 25px 25px;
+                linear-gradient(45deg, var(--pattern-color) 25%, transparent 25%, transparent 75%, var(--pattern-color) 75%, var(--pattern-color)),
+                linear-gradient(45deg, var(--pattern-color) 25%, transparent 25%, transparent 75%, var(--pattern-color) 75%, var(--pattern-color));
+            background-size: 60px 60px;
+            background-position: 0 0, 30px 30px;
             
-            animation: patternMove 60s linear infinite; /* حركة بطيئة جداً */
+            /* الأنيميشن: ease-in-out هو اللي بيعمل تأثير التسرع والتباطؤ */
+            animation: patternFloat 15s ease-in-out infinite;
         }
 
         header {
-            padding: 5rem 1.5rem 3rem;
+            padding: 4rem 1.5rem;
             text-align: center;
+            background: linear-gradient(to bottom, rgba(253, 251, 247, 0.9), transparent); /* تدرج شفاف */
         }
 
-        /* 3. اسم البراند (تأثير الذهب الحقيقي) */
         h1 { 
             font-family: 'Reem Kufi', sans-serif; 
+            color: var(--islamic-teal); 
             margin: 0;
-            font-size: 4.5rem; 
-            letter-spacing: 1px;
+            font-size: 4rem; 
+            letter-spacing: 1px; 
+            text-shadow: 2px 2px 0px rgba(212, 175, 55, 0.3); /* ظل ذهبي */
+            animation: fadeInUp 1s ease-out forwards;
+        }
+
+        header p {
+            font-family: 'Noto Nastaliq Urdu', serif;
+            font-size: 1.5rem;
+            line-height: 2.2;
+            margin-top: 15px;
+            color: #555;
+            animation: fadeInUp 1.2s ease-out forwards;
+        }
+
+        /* حاوية المنتجات (Grid System) */
+        .products-grid {
+            max-width: 1100px;
+            margin: 0 auto 4rem;
+            padding: 0 1rem;
+            display: grid;
+            /* التوزيع التلقائي: كارتين جنب بعض لو الشاشة تسمح، وواحد لو موبايل */
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+            gap: 2rem; /* مسافة بين المنتجات */
+        }
+        
+        .product-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            /* ظل ناعم وبرواز ذهبي */
+            box-shadow: 0 10px 25px rgba(14, 77, 70, 0.08); 
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            transition: transform 0.3s ease;
             
-            /* الكود السحري لعمل تدرج الذهب */
-            background: linear-gradient(to right, var(--gold-dark), var(--gold-main
+            /* أنيميشن الظهور */
+            animation: fadeInUp 1.5s ease-out forwards;
+            opacity: 0; /* يبدأ مخفي */
+        }
+        
+        /* تأخير ظهور الكارت التاني شوية عشان الحركة تبقى شيك */
+        .product-card:nth-child(1) { animation-delay: 0.2s; }
+        .product-card:nth-child(2) { animation-delay: 0.4s; }
+
+        .product-card:hover {
+            transform: translateY(-10px); /* يرتفع لفوق لما نقف عليه */
+            box-shadow: 0 15px 35px rgba(14, 77, 70, 0.15);
+            border-color: var(--gold);
+        }
+
+        /* مكان الصورة */
+        .img-placeholder {
+            width: 100%;
+            height: 300px;
+            background-color: #f4f4f4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            border: 2px dashed #ddd;
+        }
+
+        .product-card h2 {
+            font-family: 'Reem Kufi', sans-serif;
+            color: var(--islamic-teal);
+            font-size: 1.8rem;
+            margin: 1rem 0 0.5rem;
+        }
+
+        .product-desc {
+            color: #666;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            height: 60px; /* توحيد الطول عشان الكروت تبقى قد بعض */
+        }
+
+        .price {
+            font-size: 1.6rem;
+            color: var(--gold);
+            font-weight: bold;
+            font-family: 'Reem Kufi', sans-serif;
+            margin-bottom: 1rem;
+        }
+        
+        .btn-buy {
+            background-color: var(--islamic-teal);
+            color: var(--white);
+            padding: 0.8rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Reem Kufi', sans-serif; 
+            width: 100%; /* الزرار ياخد العرض كله */
+        }
+        
+        .btn-buy:hover {
+            background-color: var(--gold);
+            color: var(--islamic-teal);
+            font-weight: bold;
+        }
+        
+        footer {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--islamic-teal);
+            color: var(--white);
+            text-align: center;
+            font-family: 'Reem Kufi', sans-serif;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Qura’an Store</h1>
+    <p>ولا يزال المؤمن يقبل على القرآن حتى يجد فيه سلواه وأنسه وثبات أوتاد الإيمان في قلبه</p>
+</header>
+
+<div class="products-grid">
+    
+    <div class="product-card">
+        <div class="img-placeholder">
+            <p style="color:#aaa; font-family:'Reem Kufi'">صورة المنتج 1</p>
+        </div>
+        <h2>مصحف التجويد - طبعة فاخرة</h2>
+        <p class="product-desc">مصحف ملون بأحكام التجويد، ورق شمواه مريح للعين، وتجليد فني متين.</p>
+        <div class="price">150 جنيه</div>
+        <button class="btn-buy" onclick="buyNow('مصحف التجويد')">طلب عبر واتساب</button>
+    </div>
+
+    <div class="product-card">
+        <div class="img-placeholder">
+            <p style="color:#aaa; font-family:'Reem Kufi'">صورة المنتج 2</p>
+        </div>
+        <h2>سبحة إلكترونية وكتاب الأذكار</h2>
+        <p class="product-desc">طقم هدية مميز يحتوي على سبحة أنيقة وكتاب حصن المسلم بتصميم عصري.</p>
+        <div class="price">200 جنيه</div>
+        <button class="btn-buy" onclick="buyNow('عرض السبحة والأذكار')">طلب عبر واتساب</button>
+    </div>
+
+</div>
+
+<footer>
+    &copy; 2026 جميع الحقوق محفوظة - Qura’an Store
+</footer>
+
+<script>
+    function buyNow(productName) {
+        const message = `السلام عليكم، أريد طلب منتج: (${productName}) من موقع Qura’an Store`;
+        const phone = "201000000000"; 
+        window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
+    }
+</script>
+
+</body>
+</html>
