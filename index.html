@@ -23,7 +23,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* أنيميشن الاهتزاز للسلة */
         @keyframes shake {
             0% { transform: rotate(0deg); }
             25% { transform: rotate(15deg); }
@@ -450,7 +449,8 @@
 
     function directBuy(productName) {
         const message = `السلام عليكم، أريد طلب منتج: (${productName})`;
-        window.open(`https://wa.me/${myPhone}?text=${encodeURIComponent(message)}`, '_blank');
+        // التعديل: الفتح في نفس الصفحة
+        window.location.href = `https://wa.me/${myPhone}?text=${encodeURIComponent(message)}`;
     }
 
     function checkoutWhatsApp() {
@@ -459,7 +459,8 @@
         cart.forEach(item => {
             message += `- ${item.name}\n`;
         });
-        window.open(`https://wa.me/${myPhone}?text=${encodeURIComponent(message)}`, '_blank');
+        // التعديل: الفتح في نفس الصفحة
+        window.location.href = `https://wa.me/${myPhone}?text=${encodeURIComponent(message)}`;
     }
 </script>
 
