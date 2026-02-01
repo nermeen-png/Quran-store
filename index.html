@@ -11,21 +11,13 @@
 
     <style>
         :root {
-            /* الألوان الجديدة */
-            --teal-top: #2a7a72;     /* تركواز فاتح (بداية الموقع) */
-            --teal-bottom: #082d29;  /* تركواز غامق جداً (نهاية الموقع) */
-            --card-cream: #fdfbf7;   /* لون الكروت (أوف وايت) */
-            --gold-main: #d4af37;    /* ذهبي */
-            --gold-light: #f9e6a5;   /* ذهبي فاتح للمعة */
-            --text-dark: #0e4d46;    /* لون الكتابة جوه الكروت */
+            --teal-top: #2a7a72;     
+            --teal-bottom: #082d29;  
+            --gold-main: #d4af37;    
+            --gold-light: #f9e6a5;   
+            --text-dark: #0e4d46;    
         }
         
-        @keyframes patternFloat {
-            0% { background-position: 0 0; }
-            50% { background-position: 40px 40px; } 
-            100% { background-position: 0 0; }      
-        }
-
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -34,35 +26,16 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            /* لون النصوص العام أصبح أبيض ليظهر على الخلفية التركواز */
             color: #ffffff;
             overflow-x: hidden;
             
-            /* ----- الخلفية المتدرجة الثابتة ----- */
-            /* يبدأ من التركواز الفاتح وينتهي بالغامق */
+            /* خلفية متدرجة سادة بدون نقوش */
             background: linear-gradient(to bottom, var(--teal-top), var(--teal-bottom));
-            background-attachment: fixed; /* السر هنا: الخلفية ثابتة لتعطي إيحاء التدرج مع السكرول */
+            background-attachment: fixed; 
             min-height: 100vh;
-            
-            /* ----- النقشة الإسلامية (تعديل لونها لشفاف أبيض) ----- */
-            position: relative;
         }
 
-        /* طبقة النقشة عشان تكون فوق الخلفية المتدرجة */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            /* نقشة بيضاء شفافة جداً */
-            background-image: 
-                linear-gradient(45deg, rgba(255,255,255,0.03) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.03) 75%, rgba(255,255,255,0.03)),
-                linear-gradient(45deg, rgba(255,255,255,0.03) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.03) 75%, rgba(255,255,255,0.03));
-            background-size: 60px 60px;
-            background-position: 0 0, 30px 30px;
-            animation: patternFloat 20s ease-in-out infinite;
-            pointer-events: none;
-            z-index: -1;
-        }
+        /* تم حذف كود النقوش (body::before) من هنا */
 
         header {
             padding: 4rem 1.5rem;
@@ -72,26 +45,27 @@
         h1 { 
             font-family: 'Reem Kufi', sans-serif; 
             margin: 0;
-            font-size: 4rem; 
-            letter-spacing: 1px; 
             
-            /* ----- تأثير الذهب (Gradient Text) ----- */
+            /* تعديل مهم: حجم الخط يتغير حسب الشاشة عشان يفضل سطر واحد */
+            /* clamp(أصغر حجم, الحجم المتغير, أكبر حجم) */
+            font-size: clamp(2.5rem, 6vw, 4.5rem); 
+            
+            /* إجبار النص يكون على سطر واحد */
+            white-space: nowrap; 
+            
             background: linear-gradient(to right, #bf953f, var(--gold-light), #bf953f);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            
-            /* ظل خفيف للكلمة */
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
-            
             animation: fadeInUp 1s ease-out forwards;
         }
 
         header p {
             font-family: 'Noto Nastaliq Urdu', serif;
-            font-size: 1.5rem;
-            line-height: 2.2;
+            font-size: 1.3rem; /* تصغير بسيط عشان الموبايل */
+            line-height: 2;
             margin-top: 15px;
-            color: rgba(255, 255, 255, 0.9); /* أبيض هادي */
+            color: rgba(255, 255, 255, 0.9); 
             text-shadow: 0 2px 5px rgba(0,0,0,0.2);
             animation: fadeInUp 1.2s ease-out forwards;
         }
@@ -105,19 +79,22 @@
             gap: 2rem;
         }
         
-        /* ----- كارت المنتج (كريمي/أوف وايت) ----- */
         .product-card {
-            background: var(--card-cream); /* الخلفية الكريمي */
+            /* تعديل الشفافية هنا */
+            /* اللون الأبيض الكريمي مع شفافية 0.85 (يعني 15% شفاف) */
+            background: rgba(253, 251, 247, 0.85); 
+            
+            /* تأثير الزجاج (Blur) للخلفية ورا الكارت */
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+
             border-radius: 20px;
             padding: 2rem;
             text-align: center;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); /* ظل أقوى شوية عشان يفصل عن الخلفية */
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); 
+            border: 1px solid rgba(255, 255, 255, 0.2);
             transition: transform 0.3s ease;
-            
-            /* إرجاع لون النص للغامق عشان يبان جوه الكارت الفاتح */
             color: var(--text-dark); 
-            
             animation: fadeInUp 1.5s ease-out forwards;
             opacity: 0;
         }
@@ -127,13 +104,13 @@
 
         .product-card:hover {
             transform: translateY(-10px);
-            border: 2px solid var(--gold-main); /* برواز ذهبي عند الوقوف عليه */
+            border: 1px solid var(--gold-main); 
         }
 
         .img-placeholder {
             width: 100%;
             height: 300px;
-            background-color: #f0ece6; /* لون رمادي مايل للكريمي */
+            background-color: #f0ece6; 
             display: flex;
             align-items: center;
             justify-content: center;
@@ -145,13 +122,13 @@
 
         .product-card h2 {
             font-family: 'Reem Kufi', sans-serif;
-            color: var(--text-dark); /* تركواز غامق */
+            color: var(--text-dark); 
             font-size: 1.8rem;
             margin: 1rem 0 0.5rem;
         }
 
         .product-desc {
-            color: #555; /* رمادي غامق */
+            color: #444; 
             font-size: 1rem;
             line-height: 1.6;
             margin-bottom: 1.5rem;
@@ -160,36 +137,55 @@
 
         .price {
             font-size: 1.6rem;
-            color: var(--gold-main);
+            color: var(--gold-main); /* السعر ذهبي كما هو */
             font-weight: bold;
             font-family: 'Reem Kufi', sans-serif;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
         
-        .btn-buy {
-            background-color: var(--text-dark); /* زرار تركواز غامق */
-            color: #fff;
-            padding: 0.8rem 2.5rem;
-            border: none;
+        /* حاوية الأزرار عشان يجوا جنب بعض */
+        .buttons-wrapper {
+            display: flex;
+            gap: 10px; /* مسافة بين الزرارين */
+            justify-content: center;
+        }
+
+        /* ستايل عام للأزرار */
+        .btn {
+            padding: 0.8rem 1rem;
             border-radius: 50px;
-            font-size: 1.1rem;
+            font-size: 1rem;
             cursor: pointer;
             transition: all 0.3s ease;
             font-family: 'Reem Kufi', sans-serif; 
-            width: 100%;
+            flex: 1; /* عشان الزرارين ياخدوا نفس المساحة */
+            border: 2px solid var(--text-dark);
         }
-        
+
+        /* زر الشراء (ممتلئ) */
+        .btn-buy {
+            background-color: var(--text-dark);
+            color: #fff;
+        }
         .btn-buy:hover {
             background-color: var(--gold-main);
+            border-color: var(--gold-main);
             color: var(--text-dark);
-            font-weight: bold;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* زر السلة (مفرغ) */
+        .btn-cart {
+            background-color: transparent;
+            color: var(--text-dark);
+        }
+        .btn-cart:hover {
+            background-color: rgba(14, 77, 70, 0.1);
         }
         
         footer {
             margin-top: 3rem;
             padding: 2rem;
-            background: rgba(0, 0, 0, 0.3); /* خلفية شفافة غامقة تندمج مع التدريج */
+            background: rgba(0, 0, 0, 0.3); 
             color: #eee;
             text-align: center;
             font-family: 'Reem Kufi', sans-serif;
@@ -214,7 +210,11 @@
         <h2>مصحف التجويد - طبعة فاخرة</h2>
         <p class="product-desc">مصحف ملون بأحكام التجويد، ورق شمواه مريح للعين، وتجليد فني متين.</p>
         <div class="price">150 جنيه</div>
-        <button class="btn-buy" onclick="buyNow('مصحف التجويد')">طلب عبر واتساب</button>
+        
+        <div class="buttons-wrapper">
+            <button class="btn btn-cart" onclick="addToCart('مصحف التجويد')">إضافة للسلة</button>
+            <button class="btn btn-buy" onclick="buyNow('مصحف التجويد')">شراء الآن</button>
+        </div>
     </div>
 
     <div class="product-card">
@@ -224,7 +224,11 @@
         <h2>سبحة إلكترونية وكتاب الأذكار</h2>
         <p class="product-desc">طقم هدية مميز يحتوي على سبحة أنيقة وكتاب حصن المسلم بتصميم عصري.</p>
         <div class="price">200 جنيه</div>
-        <button class="btn-buy" onclick="buyNow('عرض السبحة والأذكار')">طلب عبر واتساب</button>
+        
+        <div class="buttons-wrapper">
+            <button class="btn btn-cart" onclick="addToCart('عرض السبحة والأذكار')">إضافة للسلة</button>
+            <button class="btn btn-buy" onclick="buyNow('عرض السبحة والأذكار')">شراء الآن</button>
+        </div>
     </div>
 
 </div>
@@ -238,6 +242,10 @@
         const message = `السلام عليكم، أريد طلب منتج: (${productName}) من موقع Qura’an Store`;
         const phone = "201000000000"; 
         window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
+    }
+
+    function addToCart(productName) {
+        alert(`تمت إضافة "${productName}" إلى سلة المشتريات بنجاح!`);
     }
 </script>
 
