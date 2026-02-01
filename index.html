@@ -11,10 +11,9 @@
 
     <style>
         :root {
-            --gold: #d4af37;
-            --dark-green: #1a3c34;
-            --purple-deep: #2a0a38; 
-            --purple-light: #3d1052; /* لون افتح شوية للتدريج */
+            --gold: #f2d06b; /* ذهبي فاتح عشان ينور في السما */
+            --night-start: #020c1b; /* كحلي غامق جداً */
+            --night-end: #1a2a44;   /* أزرق ليلي */
             --white: #ffffff;
         }
         body {
@@ -22,61 +21,92 @@
             margin: 0;
             background-color: #f9f9f9;
             color: #333;
-            overflow-x: hidden; /* عشان نمنع ظهور شريط تمرير بالعرض */
-        }
-        
-        /* ----- تعريف الحركات (Animations) ----- */
-        
-        /* 1. حركة الخلفية الهندسية */
-        @keyframes patternMove {
-            0% { background-position: 0 0; }
-            100% { background-position: 60px 60px; } /* تحريك النقشة ببطء */
+            overflow-x: hidden; 
         }
 
-        /* 2. حركة ظهور النصوص من تحت لفوق */
+        /* ----- تعريف أنيميشن الوميض ----- */
+        @keyframes twinkle {
+            0% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); box-shadow: 0 0 10px rgba(255, 255, 255, 0.8); }
+            100% { opacity: 0.3; transform: scale(0.8); }
+        }
+
+        @keyframes moveStars {
+            from { background-position: 0 0; }
+            to { background-position: 100px 100px; }
+        }
+        
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px); /* يبدأ من تحت شوية */
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0); /* يستقر في مكانه */
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ------------------------------------ */
-
+        /* ----- تصميم الهيدر (السماء والنجوم) ----- */
         header {
             position: relative;
-            background-color: var(--purple-deep); 
-            
-            /* النقشة الإسلامية */
-            background-image: 
-                repeating-linear-gradient(45deg, rgba(212, 175, 55, 0.05) 0px, rgba(212, 175, 55, 0.05) 2px, transparent 2px, transparent 15px),
-                repeating-linear-gradient(-45deg, rgba(212, 175, 55, 0.05) 0px, rgba(212, 175, 55, 0.05) 2px, transparent 2px, transparent 15px);
-            
-            background-size: 30px 30px;
-            
-            /* تطبيق أنيميشن الخلفية: 10 ثواني، حركة خطية، لا نهائية */
-            animation: patternMove 10s linear infinite;
-            
+            /* تدرج لون السماء ليلاً */
+            background: linear-gradient(to bottom, var(--night-start), var(--night-end));
             color: var(--white);
-            padding: 5rem 1.5rem; /* كبرت المساحة شوية عشان الفخامة */
+            padding: 5rem 1.5rem; 
             text-align: center;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             border-bottom: 4px solid var(--gold);
+            overflow: hidden;
         }
 
-        header h1 { 
+        /* الطبقة الأولى: نجوم صغيرة بتتحرك ببطء */
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            /* رسم نقاط بيضاء بالكود */
+            background-image: 
+                radial-gradient(white 1px, transparent 1.5px),
+                radial-gradient(white 1px, transparent 1.5px);
+            background-size: 50px 50px, 100px 100px;
+            background-position: 0 0, 25px 25px;
+            opacity: 0.6;
+            animation: moveStars 60s linear infinite; /* حركة بطيئة جداً */
+            z-index: 1;
+        }
+
+        /* الطبقة الثانية: نجوم الوميض (تلمع وتختفي) */
+        .twinkling-stars {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1;
+        }
+        
+        /* صنعنا نجوم وميض عشوائية باستخدام CSS */
+        .star {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite ease-in-out;
+        }
+        /* توزيع النجوم في أماكن مختلفة وتوقيتات مختلفة */
+        .star:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+        .star:nth-child(2) { top: 30%; left: 80%; animation-delay: 1s; }
+        .star:nth-child(3) { top: 70%; left: 20%; animation-delay: 2s; }
+        .star:nth-child(4) { top: 10%; left: 50%; animation-delay: 0.5s; }
+        .star:nth-child(5) { top: 80%; left: 85%; animation-delay: 1.5s; }
+        .star:nth-child(6) { top: 50%; left: 5%; animation-delay: 2.5s; }
+
+        /* المحتوى يظهر فوق الخلفية */
+        header h1, header p {
+            position: relative;
+            z-index: 2;
+        }
+
+        h1 { 
             font-family: 'Reem Kufi', sans-serif; 
             color: var(--gold); 
             margin: 0;
             font-size: 4rem; 
             letter-spacing: 1px; 
-            text-shadow: 0 4px 10px rgba(0,0,0,0.4);
-            
-            /* تطبيق أنيميشن الظهور */
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.6); /* وهج ذهبي حول الاسم */
             animation: fadeInUp 1.2s ease-out forwards;
         }
 
@@ -86,23 +116,20 @@
             line-height: 2.4;
             margin-top: 20px;
             color: #e0e0e0;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
-            
-            /* تطبيق أنيميشن الظهور (بتأخير بسيط عشان يظهر بعد العنوان) */
+            text-shadow: 0 2px 5px rgba(0,0,0,0.8);
             animation: fadeInUp 1.5s ease-out forwards;
-            animation-delay: 0.3s; /* تأخير 0.3 ثانية */
-            opacity: 0; /* مخفي في البداية لحد ما الأنيميشن يشتغل */
+            animation-delay: 0.3s;
+            opacity: 0;
         }
 
+        /* ----- باقي التصميم ----- */
         .container {
             max-width: 1000px;
-            margin: -3rem auto 2rem; /* تداخل أكبر مع الهيدر */
+            margin: -3rem auto 2rem;
             padding: 0 1rem;
             text-align: center;
             position: relative;
             z-index: 3;
-            
-            /* أنيميشن للكارت كمان */
             animation: fadeInUp 1.5s ease-out forwards;
             animation-delay: 0.6s;
             opacity: 0;
@@ -112,36 +139,36 @@
             background: white;
             border-radius: 20px;
             padding: 2.5rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1); /* ظل أنعم وأكبر */
-            border: 1px solid rgba(212, 175, 55, 0.2); /* برواز ذهبي خفيف جداً */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 1px solid rgba(212, 175, 55, 0.2);
         }
 
         .price {
             font-size: 1.8rem;
-            color: var(--purple-deep);
+            color: var(--night-end); /* السعر بنفس لون السماء الغامق */
             font-weight: bold;
             margin: 1.5rem 0;
             font-family: 'Reem Kufi', sans-serif;
         }
         
         .btn-buy {
-            background: linear-gradient(45deg, var(--purple-deep), var(--purple-light)); /* تدرج لوني للزرار */
+            background: linear-gradient(45deg, var(--night-start), var(--night-end));
             color: var(--gold);
             padding: 1rem 3rem;
             border: 1px solid var(--gold);
-            border-radius: 50px; /* زرار دائري الجوانب */
+            border-radius: 50px;
             font-size: 1.3rem;
             cursor: pointer;
             transition: all 0.3s ease;
             font-family: 'Reem Kufi', sans-serif; 
-            box-shadow: 0 4px 15px rgba(42, 10, 56, 0.3);
+            box-shadow: 0 4px 15px rgba(2, 12, 27, 0.3);
         }
         
         .btn-buy:hover {
-            transform: translateY(-3px); /* الزرار يطلع لفوق لما تقفي عليه */
-            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4); /* ظل ذهبي */
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
             background: var(--gold);
-            color: var(--purple-deep);
+            color: var(--night-start);
         }
         
         footer {
@@ -158,6 +185,15 @@
 <body>
 
 <header>
+    <div class="twinkling-stars">
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+    </div>
+
     <h1>Qura’an Store</h1>
     <p>ولا يزال المؤمن يقبل على القرآن حتى يجد فيه سلواه وأنسه وثبات أوتاد الإيمان في قلبه</p>
 </header>
