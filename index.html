@@ -11,17 +11,19 @@
 
     <style>
         :root {
-            /* باليتة الألوان الجديدة */
-            --purple-mid: #512da8;   /* بنفسجي متوسط (لون المنتصف) */
-            --purple-dark: #240046;  /* بنفسجي غامق جداً (للأطراف والأسفل) */
-            --gold: #d4af37;         /* اللون الذهبي الأساسي */
+            /* باليتة الألوان الملكية */
+            --purple-center: #6a1b9a; /* بنفسجي متوسط في المنتصف */
+            --purple-dark: #120024;   /* كحلي غامق جداً للأطراف */
+            --gold-light: #FBF5B7;    /* ذهبي فاتح (لمعة) */
+            --gold-main: #BF953F;     /* ذهبي أساسي */
+            --gold-dark: #8a6e2f;     /* ذهبي غامق (ضل) */
             --white: #ffffff;
         }
         
-        /* حركة النقوش البطيئة */
+        /* حركة النقوش البطيئة والانسيابية */
         @keyframes patternMove {
-            from { background-position: 0 0; }
-            to { background-position: 100px 100px; } /* حركة ناعمة وبطيئة */
+            0% { background-position: 0 0; }
+            100% { background-position: 100px 100px; } /* تتحرك ببطء ونعومة */
         }
 
         @keyframes fadeInUp {
@@ -29,31 +31,53 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* 1. الخلفية الأساسية (ثابتة ومتدرجة) */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             color: var(--white);
             overflow-x: hidden;
             
-            /* ----- 1. الخلفية المتدرجة الثابتة ----- */
-            /* تدرج دائري: يبدأ فاتح من النص ويغمق للأطراف */
-            background: radial-gradient(circle at center, var(--purple-mid), var(--purple-dark));
-            background-attachment: fixed; /* التثبيت هو سر تغير اللون مع السكرول */
+            /* تدرج دائري: يبدأ بنفسجي من المنتصف ويغمق للأطراف */
+            background: radial-gradient(circle at 50% 30%, var(--purple-center), var(--purple-dark) 80%);
+            background-attachment: fixed; /* الخلفية ثابتة، المحتوى هو اللي بيتحرك */
+            background-size: cover;
             min-height: 100vh;
         }
 
-        /* ----- 2. طبقة النقوش الذهبية المتحركة ----- */
+        /* 2. طبقة النقوش الذهبية المتحركة */
         .pattern-overlay {
-            position: fixed; /* ثابتة فوق الخلفية */
+            position: fixed; /* ثابتة بملء الشاشة */
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none; /* عشان متمنعش الضغط على اللي تحتها */
-            z-index: -1; /* تكون ورا المحتوى */
-            opacity: 0.15; /* شفافية خفيفة جداً */
+            pointer-events: none; /* عشان نقدر ندوس على اللي تحتها */
+            z-index: -1; /* خلف المحتوى */
+            opacity: 0.1; /* شفافية خفيفة جداً لتعطي مظهر راقي */
             
-            /* رسم نقشة إسلامية ذهبية بالكود (مستوحاة من صورك) */
+            /* رسم نقشة هندسية إسلامية بالكود (بديل للصور) */
+            /* يمكنك استبدال هذا السطر بـ url('pattern.png') لو عندك صورة نقشة شفافة */
             background-image: 
-                radial-gradient(circle at 50% 50%, transparent 0%, transparent 40%, var(--gold) 40%, var(--gold) 45%, transparent 45%),
-                radial-gradient(circle at 0% 0%, transparent 0%, transparent 30%, var(--gold) 30%, var(--gold) 35%, transparent 35%),
+                radial-gradient(circle, var(--gold-main) 2px, transparent 2.5px),
+                radial-gradient(circle, var(--gold-main) 2px, transparent 2.5px);
+            background-size: 50px 50px;
+            background-position: 0 0, 25px 25px;
+            
+            animation: patternMove 60s linear infinite; /* حركة بطيئة جداً */
+        }
+
+        header {
+            padding: 5rem 1.5rem 3rem;
+            text-align: center;
+        }
+
+        /* 3. اسم البراند (تأثير الذهب الحقيقي) */
+        h1 { 
+            font-family: 'Reem Kufi', sans-serif; 
+            margin: 0;
+            font-size: 4.5rem; 
+            letter-spacing: 1px;
+            
+            /* الكود السحري لعمل تدرج الذهب */
+            background: linear-gradient(to right, var(--gold-dark), var(--gold-main
