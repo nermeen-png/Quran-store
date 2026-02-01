@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Qura’an Store | لمسات إيمانية</title>
+    <title>Qura’an Store</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,7 +15,7 @@
             --teal-bottom: #082d29;  
             --gold-main: #d4af37;    
             --gold-light: #f9e6a5;   
-            --text-dark: #00332c; /* غمقت النص شوية عشان يبان مع الشفافية */   
+            --text-dark: #00332c;    
         }
         
         @keyframes fadeInUp {
@@ -70,14 +70,9 @@
         }
         
         .product-card {
-            /* --- التعديل هنا: زيادة الشفافية --- */
-            /* opacity 0.45 يعني شفافة جداً */
             background: rgba(253, 251, 247, 0.45); 
-            
-            /* Blur عالي عشان الكلام يبان بوضوح */
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
-
             border-radius: 20px;
             padding: 2rem;
             text-align: center;
@@ -100,7 +95,7 @@
         .img-placeholder {
             width: 100%;
             height: 300px;
-            background-color: rgba(255, 255, 255, 0.5); /* خليت مكان الصورة كمان شفاف */
+            background-color: rgba(255, 255, 255, 0.5); 
             display: flex;
             align-items: center;
             justify-content: center;
@@ -112,14 +107,14 @@
 
         .product-card h2 {
             font-family: 'Reem Kufi', sans-serif;
-            color: #00221c; /* لون غامق جدا للعنوان */
+            color: #00221c; 
             font-size: 1.8rem;
             margin: 1rem 0 0.5rem;
             font-weight: bold;
         }
 
         .product-desc {
-            color: #111; /* أسود عشان يبان */
+            color: #111; 
             font-size: 1rem;
             line-height: 1.6;
             margin-bottom: 1.5rem;
@@ -127,16 +122,18 @@
             font-weight: 500;
         }
 
+        /* --- تعديل لون السعر للذهبي --- */
         .price {
             font-size: 1.6rem;
-            color: #4a3b12; /* ذهبي غامق للقراءة */
+            color: var(--gold-main); /* اللون الذهبي */
             font-weight: bold;
             font-family: 'Reem Kufi', sans-serif;
             margin-bottom: 1.5rem;
-            background: rgba(255,255,255,0.4); /* خلفية خفيفة ورا السعر */
-            padding: 5px;
+            background: rgba(0, 0, 0, 0.6); /* خلفية غامقة خفيفة عشان الذهبي يلمع */
+            padding: 5px 15px;
             border-radius: 10px;
             display: inline-block;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
         
         .buttons-wrapper {
@@ -186,21 +183,17 @@
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* ---------------------------------------------------- */
-        /* تصميم أيقونة السلة والقائمة المنبثقة (Cart Styles) */
-        /* ---------------------------------------------------- */
-        
-        /* 1. الأيقونة العائمة */
+        /* Cart Styles */
         .cart-icon-float {
             position: fixed;
             bottom: 30px;
-            left: 30px; /* مكانها شمال تحت */
+            left: 30px; 
             background-color: var(--gold-main);
             color: var(--teal-bottom);
             width: 60px;
             height: 60px;
             border-radius: 50%;
-            display: none; /* مخفية في البداية */
+            display: none; 
             align-items: center;
             justify-content: center;
             font-size: 1.5rem;
@@ -213,7 +206,6 @@
         .cart-icon-float:hover {
             transform: scale(1.1);
         }
-        /* عداد المنتجات */
         .cart-count {
             position: absolute;
             top: -5px;
@@ -230,12 +222,11 @@
             font-weight: bold;
         }
 
-        /* 2. النافذة المنبثقة (Modal) */
         .cart-modal-overlay {
-            display: none; /* مخفية */
+            display: none; 
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8); /* خلفية سوداء شفافة */
+            background: rgba(0,0,0,0.8); 
             z-index: 2000;
             align-items: center;
             justify-content: center;
@@ -297,7 +288,7 @@
         }
 
         .btn-checkout {
-            background: #25D366; /* لون واتساب */
+            background: #25D366; 
             color: white;
             width: 100%;
             padding: 12px;
@@ -389,49 +380,38 @@
 </footer>
 
 <script>
-    // مصفوفة لتخزين المنتجات
     let cart = [];
 
-    // دالة إضافة للسلة
     function addToCart(name, price) {
-        // إضافة المنتج للمصفوفة
         cart.push({ name: name, price: price });
         
-        updateCartUI(); // تحديث الشكل
+        updateCartUI(); 
         
-        // إظهار أيقونة السلة لو كانت مخفية
+        // إظهار الأيقونة
         document.getElementById('cartIcon').style.display = 'flex';
         
-        // رسالة تأكيد صغيرة (Toast)
-        alert(`تمت إضافة "${name}" للسلة بنجاح`);
+        // تم حذف الـ alert من هنا بناءً على طلبك
     }
 
-    // دالة حذف من السلة
     function removeFromCart(index) {
-        cart.splice(index, 1); // حذف العنصر
-        updateCartUI(); // تحديث الشكل
+        cart.splice(index, 1);
+        updateCartUI();
         
-        // لو السلة فضيت، نخفي الأيقونة
         if (cart.length === 0) {
             document.getElementById('cartIcon').style.display = 'none';
             closeCartModal();
         }
     }
 
-    // دالة تحديث واجهة السلة
     function updateCartUI() {
-        // تحديث العداد
         document.getElementById('cartCount').innerText = cart.length;
 
         const listElement = document.getElementById('cartItemsList');
         const totalElement = document.getElementById('cartTotal');
         
-        // تفريغ القائمة القديمة
         listElement.innerHTML = '';
-        
         let total = 0;
         
-        // رسم المنتجات جوه القائمة
         cart.forEach((item, index) => {
             const li = document.createElement('li');
             li.className = 'cart-item';
@@ -446,25 +426,21 @@
         totalElement.innerText = `الإجمالي: ${total} جنيه مصري`;
     }
 
-    // دالة فتح السلة
     function openCartModal() {
-        updateCartUI(); // التأكد من التحديث قبل الفتح
+        updateCartUI();
         document.getElementById('cartModal').style.display = 'flex';
     }
 
-    // دالة غلق السلة
     function closeCartModal() {
         document.getElementById('cartModal').style.display = 'none';
     }
 
-    // دالة الشراء المباشر (زر شراء الآن)
     function directBuy(productName) {
         const message = `السلام عليكم، أريد طلب منتج: (${productName})`;
         const phone = "201000000000"; 
         window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
     }
 
-    // دالة إتمام الطلب من السلة (واتساب مجمع)
     function checkoutWhatsApp() {
         if (cart.length === 0) return;
         
