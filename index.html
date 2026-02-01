@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Qura’an Store</title>
+    <title>Qura’an Store | لمسات إيمانية</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -122,18 +122,14 @@
             font-weight: 500;
         }
 
-        /* --- تعديل لون السعر للذهبي --- */
+        /* --- تعديل السعر (بدون مربع خلفي) --- */
         .price {
-            font-size: 1.6rem;
-            color: var(--gold-main); /* اللون الذهبي */
+            font-size: 1.8rem; /* كبرت الخط شوية عشان يبان */
+            color: var(--gold-main); 
             font-weight: bold;
             font-family: 'Reem Kufi', sans-serif;
             margin-bottom: 1.5rem;
-            background: rgba(0, 0, 0, 0.6); /* خلفية غامقة خفيفة عشان الذهبي يلمع */
-            padding: 5px 15px;
-            border-radius: 10px;
-            display: inline-block;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1); /* ظل خفيف للرقم */
         }
         
         .buttons-wrapper {
@@ -381,6 +377,7 @@
 
 <script>
     let cart = [];
+    const myPhone = "201018483009"; // رقم الواتساب الجديد
 
     function addToCart(name, price) {
         cart.push({ name: name, price: price });
@@ -389,8 +386,6 @@
         
         // إظهار الأيقونة
         document.getElementById('cartIcon').style.display = 'flex';
-        
-        // تم حذف الـ alert من هنا بناءً على طلبك
     }
 
     function removeFromCart(index) {
@@ -437,8 +432,7 @@
 
     function directBuy(productName) {
         const message = `السلام عليكم، أريد طلب منتج: (${productName})`;
-        const phone = "201000000000"; 
-        window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
+        window.open(`https://wa.me/${myPhone}?text=${encodeURIComponent(message)}`, '_blank');
     }
 
     function checkoutWhatsApp() {
@@ -454,8 +448,7 @@
         
         message += `\n------------------\nالإجمالي: ${total} جنيه مصري`;
         
-        const phone = "201000000000"; 
-        window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
+        window.open(`https://wa.me/${myPhone}?text=${encodeURIComponent(message)}`, '_blank');
     }
 </script>
 
