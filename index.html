@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Qura’an Store</title>
+    <title>Qura’an Store | لمسات إيمانية</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,7 +28,6 @@
             margin: 0;
             color: #ffffff;
             overflow-x: hidden;
-            /* خلفية متدرجة صافية وثابتة */
             background: linear-gradient(to bottom, var(--teal-top), var(--teal-bottom));
             background-attachment: fixed; 
             min-height: 100vh;
@@ -381,9 +380,7 @@
 
     function addToCart(name, price) {
         cart.push({ name: name, price: price });
-        
         updateCartUI(); 
-        
         document.getElementById('cartIcon').style.display = 'flex';
     }
 
@@ -429,23 +426,25 @@
         document.getElementById('cartModal').style.display = 'none';
     }
 
+    // زرار الشراء الفوري (بدون سعر)
     function directBuy(productName) {
         const message = `السلام عليكم، أريد طلب منتج: (${productName})`;
         window.open(`https://wa.me/${myPhone}?text=${encodeURIComponent(message)}`, '_blank');
     }
 
+    // زرار السلة (تم التعديل: إزالة الأسعار الفردية والإجمالي من الرسالة)
     function checkoutWhatsApp() {
         if (cart.length === 0) return;
         
         let message = "السلام عليكم، أريد طلب المنتجات التالية:\n";
-        let total = 0;
         
+        // التعديل هنا: حذف السعر (item.price) من الرسالة
         cart.forEach(item => {
-            message += `- ${item.name} (${item.price} جنيه)\n`;
-            total += item.price;
+            message += `- ${item.name}\n`;
         });
         
-        message += `\n------------------\nالإجمالي: ${total} جنيه مصري`;
+        // لو حابة كمان نشيل الإجمالي من الرسالة عشان تكون زي "شراء الآن" بالظبط، يبقى كدة تمام.
+        // لو عايزة الإجمالي يفضل موجود كمرجع ليكي، سيبي السطر اللي جاي. أنا شيلته بناءً على طلب "زي رسالة شراء الآن".
         
         window.open(`https://wa.me/${myPhone}?text=${encodeURIComponent(message)}`, '_blank');
     }
@@ -453,4 +452,3 @@
 
 </body>
 </html>
-
