@@ -13,7 +13,8 @@
         :root {
             --gold: #d4af37;
             --dark-green: #1a3c34;
-            --purple-deep: #2a0a38; /* البنفسجي الملكي */
+            --purple-deep: #2a0a38; 
+            --purple-light: #3d1052; /* لون افتح شوية للتدريج */
             --white: #ffffff;
         }
         body {
@@ -21,94 +22,136 @@
             margin: 0;
             background-color: #f9f9f9;
             color: #333;
+            overflow-x: hidden; /* عشان نمنع ظهور شريط تمرير بالعرض */
         }
         
-        /* ----- تعديل الهيدر (الثيم البنفسجي هنا) ----- */
+        /* ----- تعريف الحركات (Animations) ----- */
+        
+        /* 1. حركة الخلفية الهندسية */
+        @keyframes patternMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 60px 60px; } /* تحريك النقشة ببطء */
+        }
+
+        /* 2. حركة ظهور النصوص من تحت لفوق */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px); /* يبدأ من تحت شوية */
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0); /* يستقر في مكانه */
+            }
+        }
+
+        /* ------------------------------------ */
+
         header {
             position: relative;
-            background-color: var(--purple-deep); /* لون الخلفية */
+            background-color: var(--purple-deep); 
             
-            /* رسم النقشة الإسلامية بالكود */
+            /* النقشة الإسلامية */
             background-image: 
                 repeating-linear-gradient(45deg, rgba(212, 175, 55, 0.05) 0px, rgba(212, 175, 55, 0.05) 2px, transparent 2px, transparent 15px),
                 repeating-linear-gradient(-45deg, rgba(212, 175, 55, 0.05) 0px, rgba(212, 175, 55, 0.05) 2px, transparent 2px, transparent 15px);
             
+            background-size: 30px 30px;
+            
+            /* تطبيق أنيميشن الخلفية: 10 ثواني، حركة خطية، لا نهائية */
+            animation: patternMove 10s linear infinite;
+            
             color: var(--white);
-            padding: 4rem 1.5rem;
+            padding: 5rem 1.5rem; /* كبرت المساحة شوية عشان الفخامة */
             text-align: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            overflow: hidden;
-            border-bottom: 4px solid var(--gold); /* خط ذهبي تحت الهيدر للشياكة */
-        }
-        /* ------------------------------------------- */
-
-        header h1, header p {
-            position: relative;
-            z-index: 2;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            border-bottom: 4px solid var(--gold);
         }
 
-        .container {
-            max-width: 1000px;
-            margin: -2rem auto 2rem;
-            padding: 0 1rem;
-            text-align: center;
-            position: relative;
-            z-index: 3;
-        }
-        .product-card {
-            background: white;
-            border-radius: 15px;
-            padding: 2rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            border: 1px solid #eee;
-        }
-
-        h1 { 
+        header h1 { 
             font-family: 'Reem Kufi', sans-serif; 
             color: var(--gold); 
             margin: 0;
-            font-size: 3.8rem; /* كبرناه شوية كمان */
+            font-size: 4rem; 
             letter-spacing: 1px; 
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            text-shadow: 0 4px 10px rgba(0,0,0,0.4);
+            
+            /* تطبيق أنيميشن الظهور */
+            animation: fadeInUp 1.2s ease-out forwards;
         }
 
         header p {
             font-family: 'Noto Nastaliq Urdu', serif;
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             line-height: 2.4;
-            margin-top: 15px;
+            margin-top: 20px;
             color: #e0e0e0;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            
+            /* تطبيق أنيميشن الظهور (بتأخير بسيط عشان يظهر بعد العنوان) */
+            animation: fadeInUp 1.5s ease-out forwards;
+            animation-delay: 0.3s; /* تأخير 0.3 ثانية */
+            opacity: 0; /* مخفي في البداية لحد ما الأنيميشن يشتغل */
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: -3rem auto 2rem; /* تداخل أكبر مع الهيدر */
+            padding: 0 1rem;
+            text-align: center;
+            position: relative;
+            z-index: 3;
+            
+            /* أنيميشن للكارت كمان */
+            animation: fadeInUp 1.5s ease-out forwards;
+            animation-delay: 0.6s;
+            opacity: 0;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); /* ظل أنعم وأكبر */
+            border: 1px solid rgba(212, 175, 55, 0.2); /* برواز ذهبي خفيف جداً */
         }
 
         .price {
-            font-size: 1.5rem;
-            color: var(--purple-deep); /* غيرت لون السعر ليتماشى مع الهيدر */
-            font-weight: bold;
-            margin: 1rem 0;
-        }
-        .btn-buy {
-            background-color: var(--purple-deep); /* الزرار بقا بنفسجي */
-            color: var(--gold); /* الكتابة ذهبي */
-            padding: 1rem 2rem;
-            border: 1px solid var(--gold);
-            border-radius: 5px;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: 0.3s;
-            font-family: 'Reem Kufi', sans-serif; 
-        }
-        .btn-buy:hover {
-            background-color: var(--gold);
+            font-size: 1.8rem;
             color: var(--purple-deep);
-            transform: scale(1.05);
+            font-weight: bold;
+            margin: 1.5rem 0;
+            font-family: 'Reem Kufi', sans-serif;
         }
+        
+        .btn-buy {
+            background: linear-gradient(45deg, var(--purple-deep), var(--purple-light)); /* تدرج لوني للزرار */
+            color: var(--gold);
+            padding: 1rem 3rem;
+            border: 1px solid var(--gold);
+            border-radius: 50px; /* زرار دائري الجوانب */
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Reem Kufi', sans-serif; 
+            box-shadow: 0 4px 15px rgba(42, 10, 56, 0.3);
+        }
+        
+        .btn-buy:hover {
+            transform: translateY(-3px); /* الزرار يطلع لفوق لما تقفي عليه */
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4); /* ظل ذهبي */
+            background: var(--gold);
+            color: var(--purple-deep);
+        }
+        
         footer {
-            margin-top: 3rem;
-            padding: 1.5rem;
+            margin-top: 4rem;
+            padding: 2rem;
             background: #eee;
             font-size: 0.9rem;
             text-align: center;
+            font-family: 'Reem Kufi', sans-serif;
+            color: #666;
         }
     </style>
 </head>
@@ -121,12 +164,12 @@
 
 <div class="container">
     <div class="product-card">
-        <div style="width:100%; height:300px; background:#f0f0f0; display:flex; align-items:center; justify-content:center; border-radius:10px; border: 2px dashed #ccc; margin-bottom: 1.5rem;">
-            <p style="color:#777">صورة المنتج (مصحف)</p>
+        <div style="width:100%; height:350px; background:#f8f8f8; display:flex; align-items:center; justify-content:center; border-radius:15px; border: 2px dashed #ccc; margin-bottom: 2rem; overflow:hidden;">
+            <p style="color:#aaa; font-family:'Reem Kufi'">صورة المنتج</p>
         </div>
         
         <h2>مصحف التجويد المفسر - طبعة فاخرة</h2>
-        <p>تصميم أنيق يساعدك على التدبر والحفظ بأسلوب عصري ومنظم.</p>
+        <p style="color:#666; line-height:1.6">تصميم أنيق يساعدك على التدبر والحفظ بأسلوب عصري ومنظم، بخط واضح وألوان مريحة للعين.</p>
         
         <div class="price">150 جنيه مصري</div>
         
