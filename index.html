@@ -23,50 +23,15 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* أنيميشن حركة النقوش */
-        @keyframes patternFloat {
-            0% { background-position: 0 0, 0 0; }
-            100% { background-position: 100px 100px, 50px 50px; }
-        }
-
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             color: #ffffff;
             overflow-x: hidden;
-            /* الخلفية الأساسية التركواز (ثابتة) */
+            /* خلفية متدرجة صافية وثابتة */
             background: linear-gradient(to bottom, var(--teal-top), var(--teal-bottom));
             background-attachment: fixed; 
             min-height: 100vh;
-            position: relative;
-        }
-
-        /* ------------------------------------------------------- */
-        /* --- طبقة النقوش الذهبية (Mandala Pattern Overlay) --- */
-        /* ------------------------------------------------------- */
-        .pattern-overlay {
-            position: fixed; /* ثابتة لملء الشاشة */
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1; /* تحت المحتوى */
-            pointer-events: none; /* عشان الضغط يعدي من خلالها */
-            opacity: 0.1; /* شفافية خفيفة جداً (كما طلبتِ) */
-            
-            /* رسم الماندالا بالكود (دوائر متداخلة ونقاط) */
-            background-image: 
-                /* الطبقة الأولى: نقاط ذهبية صغيرة (نجوم) */
-                radial-gradient(var(--gold-main) 1.5px, transparent 1.5px),
-                /* الطبقة الثانية: دوائر هندسية متداخلة (ماندالا) */
-                repeating-radial-gradient(circle at 50% 50%, transparent 0, transparent 20px, var(--gold-main) 20px, var(--gold-main) 21px, transparent 21px, transparent 40px);
-            
-            /* حجم النقشة */
-            background-size: 60px 60px, 150px 150px;
-            background-position: 0 0, 0 0;
-            
-            /* الحركة البطيئة المتناغمة */
-            animation: patternFloat 60s linear infinite;
         }
 
         header {
@@ -347,8 +312,6 @@
     </style>
 </head>
 <body>
-
-<div class="pattern-overlay"></div>
 
 <header>
     <h1>Qura’an Store</h1>
