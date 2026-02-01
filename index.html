@@ -32,7 +32,6 @@
             100% { transform: rotate(0deg); }
         }
 
-        /* كلاس هنضيفه بالجافاسكريبت لما نضيف منتج */
         .shake-animation {
             animation: shake 0.5s ease-in-out;
         }
@@ -192,7 +191,6 @@
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Cart Styles */
         .cart-icon-float {
             position: fixed;
             bottom: 30px;
@@ -202,7 +200,7 @@
             width: 60px;
             height: 60px;
             border-radius: 50%;
-            display: none; /* هتبقى flex لو السلة فيها منتجات */
+            display: none; 
             align-items: center;
             justify-content: center;
             font-size: 1.5rem;
@@ -332,7 +330,6 @@
 </header>
 
 <div class="products-grid">
-    
     <div class="product-card">
         <div class="img-placeholder">
             <p style="color:#555; font-family:'Reem Kufi'">صورة المنتج 1</p>
@@ -340,7 +337,6 @@
         <h2>مصحف التجويد - طبعة فاخرة</h2>
         <p class="product-desc">مصحف ملون بأحكام التجويد، ورق شمواه مريح للعين، وتجليد فني متين.</p>
         <div class="price">150 جنيه</div>
-        
         <div class="buttons-wrapper">
             <button class="btn btn-cart" onclick="addToCart('مصحف التجويد', 150)">إضافة للسلة</button>
             <button class="btn btn-buy" onclick="directBuy('مصحف التجويد')">شراء الآن</button>
@@ -354,13 +350,11 @@
         <h2>سبحة إلكترونية وكتاب الأذكار</h2>
         <p class="product-desc">طقم هدية مميز يحتوي على سبحة أنيقة وكتاب حصن المسلم بتصميم عصري.</p>
         <div class="price">200 جنيه</div>
-        
         <div class="buttons-wrapper">
             <button class="btn btn-cart" onclick="addToCart('عرض السبحة والأذكار', 200)">إضافة للسلة</button>
             <button class="btn btn-buy" onclick="directBuy('عرض السبحة والأذكار')">شراء الآن</button>
         </div>
     </div>
-
 </div>
 
 <div class="cart-icon-float" id="cartIcon" onclick="openCartModal()">
@@ -372,14 +366,8 @@
     <div class="cart-modal-content">
         <button class="close-modal" onclick="closeCartModal()">X</button>
         <h2>سلة المشتريات</h2>
-        
-        <ul class="cart-items-list" id="cartItemsList">
-            </ul>
-        
-        <div class="total-price" id="cartTotal">
-            الإجمالي: 0 جنيه
-        </div>
-        
+        <ul class="cart-items-list" id="cartItemsList"></ul>
+        <div class="total-price" id="cartTotal">الإجمالي: 0 جنيه</div>
         <button class="btn-checkout" onclick="checkoutWhatsApp()">إتمام الطلب عبر واتساب</button>
     </div>
 </div>
@@ -390,38 +378,32 @@
 
 <script>
     let cart = [];
-    const myPhone = "201018483009"; 
+    const myPhone = "201234567891"; 
 
-    // --- عند تحميل الصفحة: استرجاع السلة من الذاكرة ---
     window.onload = function() {
-        // ندور لو فيه حاجة متخزنة
         const savedCart = localStorage.getItem('quranStoreCart');
         if (savedCart) {
-            cart = JSON.parse(savedCart); // نرجعها لأصلها كمصفوفة
+            cart = JSON.parse(savedCart);
             updateCartUI();
-            // لو السلة فيها منتجات، نظهر الأيقونة فوراً
             if(cart.length > 0) {
                 document.getElementById('cartIcon').style.display = 'flex';
             }
         }
     };
 
-    // دالة لحفظ السلة في الذاكرة (بتشتغل بعد كل إضافة أو حذف)
     function saveCartToStorage() {
         localStorage.setItem('quranStoreCart', JSON.stringify(cart));
     }
 
     function addToCart(name, price) {
         cart.push({ name: name, price: price });
-        saveCartToStorage(); // حفظ
+        saveCartToStorage();
         updateCartUI(); 
         
         const cartIcon = document.getElementById('cartIcon');
         cartIcon.style.display = 'flex';
         
-        // تشغيل أنيميشن الاهتزاز
         cartIcon.classList.add('shake-animation');
-        // إزالة الكلاس بعد نص ثانية عشان ينفع يتهز تاني
         setTimeout(() => {
             cartIcon.classList.remove('shake-animation');
         }, 500);
@@ -429,9 +411,8 @@
 
     function removeFromCart(index) {
         cart.splice(index, 1);
-        saveCartToStorage(); // حفظ التعديل
+        saveCartToStorage();
         updateCartUI();
-        
         if (cart.length === 0) {
             document.getElementById('cartIcon').style.display = 'none';
             closeCartModal();
@@ -440,10 +421,8 @@
 
     function updateCartUI() {
         document.getElementById('cartCount').innerText = cart.length;
-
         const listElement = document.getElementById('cartItemsList');
         const totalElement = document.getElementById('cartTotal');
-        
         listElement.innerHTML = '';
         let total = 0;
         
@@ -457,7 +436,6 @@
             listElement.appendChild(li);
             total += item.price;
         });
-        
         totalElement.innerText = `الإجمالي: ${total} جنيه مصري`;
     }
 
@@ -477,13 +455,10 @@
 
     function checkoutWhatsApp() {
         if (cart.length === 0) return;
-        
         let message = "السلام عليكم، أريد طلب المنتجات التالية:\n";
-        
         cart.forEach(item => {
             message += `- ${item.name}\n`;
         });
-        
         window.open(`https://wa.me/${myPhone}?text=${encodeURIComponent(message)}`, '_blank');
     }
 </script>
